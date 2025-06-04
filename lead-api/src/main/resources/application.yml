@@ -1,0 +1,46 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: lead-api
+  webflux:
+    base-path: /api
+aws:
+  region: us-east-1
+  sqs:
+    queue-name: lead-queue
+  endpoint-url: http://localhost:4566
+  access-key-id: test
+  secret-access-key: test
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+resilience4j:
+  circuitbreaker:
+    instances:
+      sqsCircuitBreaker:
+        slidingWindowSize: 20
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30000
+        permittedNumberOfCallsInHalfOpenState: 5
+  retry:
+    instances:
+      sqsRetry:
+        maxAttempts: 3
+        waitDuration: 1000
+  ratelimiter:
+    instances:
+      leadApiRateLimiter:
+        limitForPeriod: 1000000000
+        limitRefreshPeriod: 1000ms
+        timeoutDuration: 0ms
+logging:
+  level:
+    root: INFO
+    com.forrestgump.leadapi: DEBUG
