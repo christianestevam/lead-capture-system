@@ -29,7 +29,7 @@ Desenhei uma arquitetura serverless na AWS, com **Spring WebFlux** para programa
 - **lead-api**: Recebe requisições `POST /api/leads`, valida dados, aplica rate limiting global (API Gateway, 1000 req/s) e por cliente (10 req/s por IP), gera `leadId` (hash SHA-256 com salt), e enfileira mensagens no SQS.
 - **lead-processor**: Consome mensagens em lotes, criptografa CPF com KMS, persiste no DynamoDB, com DLQ para falhas.
 
-[![Arquitetura do Sistema](https://github.com/christianestevam/lead-capture-system/blob/master/public/diagram.png)
+[![Arquitetura do Sistema](https://github.com/christianestevam/lead-capture-system/blob/master/public/diagram.jpg)
 
 ### 3.1 Fluxo de Dados
 
